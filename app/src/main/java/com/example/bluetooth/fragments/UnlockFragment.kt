@@ -31,7 +31,11 @@ class UnlockFragment : Fragment() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
         binding.btUnlock.setOnClickListener{
-            askBluetoothPermission()
+            if (!checkBtPermission()){
+                askBluetoothPermission()
+            }else{
+                startBluetoothIntent()
+            }
         }
     }
 
@@ -74,6 +78,9 @@ class UnlockFragment : Fragment() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 102){
+            startBluetoothIntent()
+        }
+        if(requestCode == 103){
             startBluetoothIntent()
         }
     }
